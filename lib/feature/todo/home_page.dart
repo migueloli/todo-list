@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'widgets/todo_list_tile.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({
     super.key,
@@ -15,9 +17,20 @@ class HomePage extends StatelessWidget {
             floating: true,
             stretch: true,
           ),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-              (context, index) => null,
+          SliverPadding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.of(context).viewPadding.bottom,
+            ),
+            sliver: SliverList(
+              delegate: SliverChildBuilderDelegate(
+                (context, index) => index < Colors.primaries.length
+                    ? TodoListTile(
+                        title: 'Test',
+                        completed: false,
+                        onChanged: (value) {},
+                      )
+                    : null,
+              ),
             ),
           ),
         ],
