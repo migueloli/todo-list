@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../todo/home_page.dart';
+import '../todo/todo_list_page/todo_list_page.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -18,8 +18,7 @@ class App extends StatelessWidget {
           GoRoute(
             path: '/',
             builder: (BuildContext context, GoRouterState state) =>
-                const HomePage(),
-            routes: const <RouteBase>[],
+                const TodoListPage(),
           ),
         ],
       ),

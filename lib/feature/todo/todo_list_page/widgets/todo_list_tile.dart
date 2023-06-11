@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class TodoListTile extends StatelessWidget {
   final String title;
   final bool completed;
-  final ValueChanged<bool> onChanged;
+  final ValueChanged<bool>? onChanged;
 
   const TodoListTile({
     super.key,
@@ -14,11 +14,10 @@ class TodoListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const space = SizedBox(width: 8);
-    return Padding(
-      padding: const EdgeInsets.all(16),
-      child: GestureDetector(
-        onTap: () => onChanged(!completed),
+    return GestureDetector(
+      onTap: onChanged != null ? () => onChanged!(!completed) : null,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -31,7 +30,7 @@ class TodoListTile extends StatelessWidget {
                 ),
               ),
             ),
-            space,
+            const SizedBox(width: 8),
             Expanded(
               child: Text(
                 title,
@@ -43,11 +42,6 @@ class TodoListTile extends StatelessWidget {
                       : TextDecoration.none,
                 ),
               ),
-            ),
-            space,
-            Icon(
-              Icons.adaptive.arrow_forward,
-              color: Colors.grey[500],
             ),
           ],
         ),
