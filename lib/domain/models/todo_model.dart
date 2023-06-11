@@ -28,7 +28,7 @@ class TodoModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'userId': userId,
-      'id': id,
+      'id': id < 0 ? null : id,
       'title': title,
       'completed': completed,
     };

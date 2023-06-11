@@ -15,8 +15,8 @@ class TodoDatasource {
   }
 
   Future<Map<String, dynamic>> postTodos(Map<String, dynamic> todo) async {
-    final path = Uri.parse('$_base/todo/');
-    final response = await _client.post(path, body: todo);
-    return jsonDecode(response.body);
+    final path = Uri.parse('$_base/todos/');
+    final response = await _client.post(path, body: json.encode(todo));
+    return json.decode(response.body);
   }
 }

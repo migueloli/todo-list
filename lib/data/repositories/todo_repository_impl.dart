@@ -19,6 +19,6 @@ class TodoRepositoryImpl extends TodoRepository {
   Future<TodoModel> postTodo(TodoModel todo) async {
     final Map<String, dynamic> result =
         await _ref.read(todoDatasourceProvider).postTodos(todo.toMap());
-    return TodoModel.fromMap(result);
+    return todo.copyWith(id: result['id'] as int);
   }
 }

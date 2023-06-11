@@ -39,4 +39,28 @@ class TodoProvider extends StateNotifier<TodoState> {
     localTodoList[index].updateCompleted = completed;
     state = SuccessTodoState(localTodoList);
   }
+
+  Future<void> addTodo(String title) async {
+    final localTodoList = todoList;
+    final todo = TodoPresenter(
+      userId: 1,
+      id: -1,
+      title: title,
+      completed: false,
+    );
+
+    state = LoadingTodoState(localTodoList);
+
+    try {
+      final result =
+          await _ref.read(todoRepositoryProvider).postTodo(todo.toModel());
+      localTodoList.add(TodoPresenter.fromModel(result));
+      state = SuccessTodoState(localTodoList);
+    } on Exception {
+      state = ErrorTodoState(
+        localTodoList,
+        'Something went wrong, showing older list.',
+      );
+    }
+  }
 }

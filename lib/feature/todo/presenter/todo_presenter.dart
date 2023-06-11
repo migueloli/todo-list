@@ -27,4 +27,6 @@ class TodoPresenter {
 
   static List<TodoPresenter> fromListModel(List<TodoModel> todos) =>
       todos.map((e) => TodoPresenter.fromModel(e)).toList();
+
+  TodoModel toModel() => TodoModel(userId, id, title, completed);
 }

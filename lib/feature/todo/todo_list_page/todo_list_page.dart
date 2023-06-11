@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../provider/todo_provider.dart';
 import '../provider/todo_state.dart';
+import 'modal/todo_create_bottom_sheet.dart';
 import 'widgets/todo_list_tile.dart';
 import 'widgets/todo_list_tile_shimmer.dart';
 
@@ -54,7 +55,18 @@ class TodoListPage extends ConsumerWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => showModalBottomSheet(
+          context: context,
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
+          ),
+          builder: (context) => TodoCreateBottomSheet(
+            onSave: ref.read(todoProvider.notifier).addTodo,
+          ),
+        ),
         child: const Icon(Icons.add),
       ),
     );
