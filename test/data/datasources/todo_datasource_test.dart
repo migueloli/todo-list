@@ -23,6 +23,7 @@ void main() {
           'completed': false,
         },
       ];
+
       when(client.get(any)).thenAnswer(
         (_) async => http.Response(
           json.encode(body),
@@ -33,11 +34,15 @@ void main() {
       final result = await datasource.getTodos(1);
 
       expect(result.first['id'], body.first['id']);
+      expect(result.first['userId'], body.first['userId']);
+      expect(result.first['title'], body.first['title']);
+      expect(result.first['completed'], body.first['completed']);
       verify(client.get(any)).called(1);
     });
 
     test('Failure', () async {
       when(client.get(any)).thenThrow(Exception('Failed with 500'));
+
       expect(() => datasource.getTodos(1), throwsA(isA<Exception>()));
       verify(client.get(any)).called(1);
     });
@@ -61,7 +66,7 @@ void main() {
         ),
       );
 
-      final result = await datasource.postTodos(body);
+      final result = await datasource.postTodo(body);
 
       expect(result['id'], body['id']);
       verify(client.post(any, body: anyNamed('body'))).called(1);
@@ -70,7 +75,8 @@ void main() {
     test('Failure', () async {
       when(client.post(any, body: anyNamed('body')))
           .thenThrow(Exception('Failed with 500'));
-      expect(() => datasource.postTodos(body), throwsA(isA<Exception>()));
+
+      expect(() => datasource.postTodo(body), throwsA(isA<Exception>()));
       verify(client.post(any, body: anyNamed('body'))).called(1);
     });
   });
