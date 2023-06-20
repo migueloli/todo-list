@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-class TodoCreateBottomSheet extends StatelessWidget {
-  final TextEditingController _controller = TextEditingController();
+class TodoCreateBottomSheet extends StatefulWidget {
   final ValueChanged<String> onSave;
 
-  TodoCreateBottomSheet({
+  const TodoCreateBottomSheet({
     super.key,
     required this.onSave,
   });
+
+  @override
+  State<TodoCreateBottomSheet> createState() => _TodoCreateBottomSheetState();
+}
+
+class _TodoCreateBottomSheetState extends State<TodoCreateBottomSheet> {
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +36,7 @@ class TodoCreateBottomSheet extends StatelessWidget {
           const SizedBox(height: 16),
           TextField(
             controller: _controller,
-            onSubmitted: onSave,
+            onSubmitted: widget.onSave,
             decoration: const InputDecoration(
               border: OutlineInputBorder(),
             ),
@@ -39,7 +45,7 @@ class TodoCreateBottomSheet extends StatelessWidget {
           ElevatedButton(
             onPressed: () {
               context.pop();
-              onSave(_controller.text);
+              widget.onSave(_controller.text);
             },
             style: ButtonStyle(
               textStyle: MaterialStateProperty.all(textStyle),
@@ -49,5 +55,11 @@ class TodoCreateBottomSheet extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 }
